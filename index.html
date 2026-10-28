@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#174b35">
+<meta name="description" content="غرس GHARS - متجر الأشجار والزهور ونباتات الزينة في السعودية">
+<title>غرس GHARS | متجر النباتات</title>
+<style>
+:root{--g:#174b35;--gold:#c5a35b;--bg:#f7f8f3;--text:#26382b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{background:var(--g);color:white;padding:17px}
+.top{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-size:26px;font-weight:bold}.logo small{display:block;font-size:12px;color:#e8d9ad;margin-top:5px}
+button{border:0;border-radius:9px;padding:12px;cursor:pointer;font-size:14px}
+.cartBtn{background:var(--gold);font-weight:bold;color:#183524}
+.hero{padding:32px 18px;text-align:center;background:linear-gradient(140deg,#dcebd5,#f4ead0)}
+.hero h1{font-size:29px;color:var(--g);margin:8px}
+.hero p{line-height:1.9;max-width:550px;margin:10px auto}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+h2{color:var(--g)}
+input,select,textarea{width:100%;padding:12px;border:1px solid #d4ddd1;border-radius:9px;font-size:15px;background:white}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.filters button{background:#e4ecdf;color:var(--g)}
+.filters button.active{background:var(--g);color:white}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid #e3e8df;border-radius:13px;overflow:hidden}
+.pic{height:120px;display:flex;align-items:center;justify-content:center;font-size:62px;background:#e8f0e3}
+.info{padding:12px}
+.info h3{margin:0 0 8px;font-size:16px}
+.desc{font-size:12px;color:#6c786d;line-height:1.7;min-height:40px}
+.price{font-size:19px;color:var(--g);font-weight:bold;margin:10px 0}
+.add{background:var(--g);color:white;width:100%}
+.panel{background:white;padding:16px;border:1px solid #e3e8df;border-radius:13px;margin:20px 0}
+.line{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid #edf0e9}
+.line button{background:#e4ecdf;padding:7px 12px}
+label{display:block;font-weight:bold;font-size:14px;margin:13px 0 6px}
+.primary{width:100%;background:var(--g);color:white;margin-top:13px}
+.note{font-size:12px;color:#6c786d;line-height:1.9}
+.empty{text-align:center;padding:20px;color:#7a857b}
+footer{background:var(--g);color:white;text-align:center;padding:24px;line-height:2}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.pic{height:170px}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<div class="top">
+<div class="logo">🌿 غرس | GHARS<small>التقنية التي تُنبت المستقبل</small></div>
+<button class="cartBtn" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">🛒 السلة (<span id="count">0</span>)</button>
+</div>
+</header>
+
+<section class="hero">
+<div style="font-size:45px">🌴 🪴 🌿</div>
+<h1>ازرع الجمال مع غرس</h1>
+<p>أشجار مثمرة، نخيل، زهور ونباتات زينة لبيتك وحديقتك. اختار نباتاتك واطلبها بسهولة.</p>
+<button class="cartBtn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">تسوّق الآن</button>
+</section>
+
+<main class="wrap">
+<section id="shop">
+<h2>منتجاتنا 🌱</h2>
+<input id="search" placeholder="ابحث عن نبات..." oninput="render()">
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<section class="panel" id="cart">
+<h2>🛒 سلة المشتريات</h2>
+<div id="items"><div class="empty">السلة فارغة</div></div>
+<div class="line"><b>إجمالي المنتجات</b><b id="total">0 ر.س</b></div>
+<p class="note">رسوم التوصيل تُحدد حسب المدينة وحجم النباتات بعد تأكيد الطلب.</p>
+<h2>بيانات العميل</h2>
+<label>الاسم الكامل</label><input id="customer" placeholder="اكتب اسمك">
+<label>رقم جوالك</label><input id="phone" type="tel" placeholder="05xxxxxxxx">
+<label>مدينة التوصيل</label><input id="city" placeholder="مثال: الرياض">
+<label>العنوان بالتفصيل</label><textarea id="address" rows="2" placeholder="الحي والشارع"></textarea>
+<label>رقم واتساب المتجر</label><input id="wa" type="tel" placeholder="9665xxxxxxxx">
+<button class="primary" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
+<p class="note">قبل استقبال العملاء، استبدل رقم واتساب التجريبي برقم المتجر الصحيح مع مفتاح السعودية 966. الأسعار المعروضة تجريبية ويجب تحديثها حسب منتجاتك الفعلية.</p>
+</section>
+<section class="panel">
+<h2>عن غرس</h2>
+<p class="note">غرس متجر متخصص في الأشجار والزهور والنباتات ومستلزمات الحدائق في السعودية. توافر النباتات ومقاساتها وتكلفة التوصيل تُؤكد قبل اعتماد كل طلب.</p>
+</section>
+</main>
+<footer>🌿 غرس GHARS<br>نباتات تنمو معها الحياة<br>© <span id="year"></span> غرس</footer>
+
+<script>
+const products=[
+{id:1,n:"شتلة ليمون",c:"أشجار مثمرة",p:35,e:"🍋",d:"شتلة مثمرة للحدائق والأصص."},
+{id:2,n:"شجرة زيتون",c:"أشجار مثمرة",p:65,e:"🫒",d:"شجرة مثمرة وزينة للمساحات الخارجية."},
+{id:3,n:"شتلة مانجو",c:"أشجار مثمرة",p:55,e:"🥭",d:"شتلة فاكهة؛ تأكد من ملاءمة المناخ."},
+{id:4,n:"نخلة زينة",c:"نخيل",p:120,e:"🌴",d:"نخلة للحدائق والمداخل."},
+{id:5,n:"جهنمية",c:"زهور",p:30,e:"🌺",d:"نبات مزهر مناسب للأماكن المشمسة."},
+{id:6,n:"ورد جوري",c:"زهور",p:25,e:"🌹",d:"نبات ورد لتنسيق الحدائق."},
+{id:7,n:"ياسمين",c:"زهور",p:28,e:"🌼",d:"نبات عطري للشرفات والحدائق."},
+{id:8,n:"شجيرة زينة",c:"نباتات زينة",p:22,e:"🌿",d:"شجيرة لتنسيق الممرات والأحواض."},
+{id:9,n:"أصيص زراعة",c:"مستلزمات",p:18,e:"🪴",d:"أصيص للنباتات المنزلية والخارجية."},
+{id:10,n:"تربة زراعية",c:"مستلزمات",p:15,e:"🪴",d:"عبوة تربة؛ يُحدد الحجم قبل الطلب."}
+];
+let category="الكل",cart={};
+const cats=["الكل",...new Set(products.map(p=>p.c))];
+document.getElementById("filters").innerHTML=cats.map(c=>
+`<button class="${c==="الكل"?"active":""}" onclick="setCategory('${c}',this)">${c}</button>`).join("");
+function setCategory(c,b){
+category=c;
+document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");render();
+}
+function render(){
+const q=document.getElementById("search").value.trim().toLowerCase();
+const list=products.filter(p=>(category==="الكل"||p.c===category)&&(p.n.toLowerCase().includes(q)||p.c.toLowerCase().includes(q)));
+document.getElementById("grid").innerHTML=list.map(p=>`
+<article class="product">
+<div class="pic">${p.e}</div><div class="info">
+<h3>${p.n}</h3><div class="desc">${p.d}</div>
+<div class="price">${p.p} ر.س</div>
+<button class="add" onclick="add(${p.id})">أضف إلى السلة</button>
+</div></article>`).join("")||'<div class="empty">لا توجد منتجات مطابقة</div>';
+drawCart();
+}
+function add(id){cart[id]=(cart[id]||0)+1;drawCart()}
+function change(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];drawCart()}
+function drawCart(){
+let count=0,total=0,html="";
+for(const [id,qty] of Object.entries(cart)){
+const p=products.find(x=>x.id===Number(id));count+=qty;total+=p.p*qty;
+html+=`<div class="line"><div>${p.e} ${p.n}<br><small>${p.p} ر.س × ${qty}</small></div><div><button onclick="change(${id},-1)">−</button> <button onclick="change(${id},1)">+</button></div></div>`;
+}
+document.getElementById("items").innerHTML=html||'<div class="empty">السلة فارغة</div>';
+document.getElementById("count").textContent=count;
+document.getElementById("total").textContent=total+" ر.س";
+}
+function sendOrder(){
+const name=document.getElementById("customer").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const city=document.getElementById("city").value.trim();
+const address=document.getElementById("address").value.trim();
+const wa=document.getElementById("wa").value.replace(/\D/g,"");
+if(!Object.keys(cart).length){alert("أضف منتجًا إلى السلة أولًا");return}
+if(!name||!phone||!city||!address){alert("أكمل بيانات العميل والعنوان");return}
+if(wa.length<10){alert("أدخل رقم واتساب المتجر مع مفتاح الدولة");return}
+let total=0,lines=[];
+for(const [id,qty] of Object.entries(cart)){
+const p=products.find(x=>x.id===Number(id));total+=p.p*qty;
+lines.push("- "+p.n+" × "+qty+" = "+p.p*qty+" ر.س");
+}
+const msg=`طلب من متجر غرس GHARS\nالاسم: ${name}\nالجوال: ${phone}\nالمدينة: ${city}\nالعنوان: ${address}\nالمنتجات:\n${lines.join("\n")}\nإجمالي المنتجات: ${total} ر.س\nالتوصيل يحدد بعد التأكيد.`;
+window.open("https://wa.me/"+wa+"?text="+encodeURIComponent(msg),"_blank");
+}
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+  </html>
+  
